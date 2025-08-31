@@ -15,8 +15,12 @@
 # gem "pg"
 #
 default: &default
-  adapter: postgresql
+  adapter: postgis
   encoding: unicode
+  username: postgres
+  password: "Enabric123#"
+  host: localhost
+  port: 5432
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -24,6 +28,7 @@ default: &default
 development:
   <<: *default
   database: Drone_Data_SaaS_api_development
+  
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
