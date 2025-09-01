@@ -9,17 +9,19 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  
+
+  # Use JWT instead of cookies/sessions
   config.jwt do |jwt|
-  jwt.secret = Rails.application.credentials.devise_jwt_secret_key!
-  jwt.dispatch_requests = [
-    ['POST', %r{^/login$}]
-  ]
-  jwt.revocation_requests = [
-    ['DELETE', %r{^/logout$}]
-  ]
-  jwt.expiration_time = 1.day.to_i
-end
+    jwt.secret = Rails.application.credentials.devise_jwt_secret_key!
+    jwt.dispatch_requests = [
+      ['POST', %r{^/login$}],
+      ['POST', %r{^/signup$}]
+    ]
+    jwt.revocation_requests = [
+      ['DELETE', %r{^/logout$}]
+    ]
+    jwt.expiration_time = 1.day.to_i
+  end
 
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
