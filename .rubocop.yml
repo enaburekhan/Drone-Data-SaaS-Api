@@ -1,0 +1,68 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.3
+  SuggestExtensions: false
+  Exclude:
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+
+# Layout / Style rules
+Layout/LineLength:
+  Max: 120
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# Rails-specific cops
+Rails:
+  Enabled: true
+
+Rails/SaveBang:
+  Enabled: true
+
+Rails/Presence:
+  Enabled: true
+
+Rails/SkipsModelValidations:
+  Enabled: true
+
+Rails/FindEach:
+  Enabled: true
+
+Rails/TimeZone:
+  Enabled: true
+
+Rails/HttpStatus:
+  Enabled: true
+
+# RSpec-specific cops
+RSpec:
+  Enabled: true
+
+RSpec/DescribeClass:
+  Enabled: true   # enforce correct describe naming
+
+RSpec/MultipleExpectations:
+  Max: 3          # allow up to 3 expectations per example
+
+RSpec/ExampleLength:
+  Max: 15         # keep examples short
+
+RSpec/AnyInstance:
+  Enabled: false  # allow use of `any_instance`
+
+RSpec/MessageSpies:
+  Enabled: true   # enforce `have_received` matcher
