@@ -311,6 +311,7 @@ DEPENDENCIES
   puma (~> 6.0)
   rack-cors
   rails (~> 8.0.2.1)
+  rgeo
   rubocop
   rubocop-rails
   rubocop-rspec

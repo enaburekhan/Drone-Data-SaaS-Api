@@ -12,6 +12,8 @@ gem "pg", "~> 1.1"
 
 gem "activerecord-postgis-adapter"
 
+gem 'rgeo'
+
 gem 'devise'
 gem 'devise-jwt'
 gem 'rack-cors'
