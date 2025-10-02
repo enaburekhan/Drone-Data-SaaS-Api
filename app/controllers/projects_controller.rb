@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
     # get /projects/:id
     def show
       project = current_user.projects.find(params[:id])
-      render json: projects, status: :ok
+      render json: project, status: :ok
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Project not found" }, status: :not_found
     end

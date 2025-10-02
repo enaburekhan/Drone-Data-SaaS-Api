@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_01_212030) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_02_130410) do
   create_schema "topology"
 
   # These are extensions that must be enabled in order to support this database
@@ -22,9 +22,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_01_212030) do
     t.bigint "user_id", null: false
     t.string "name"
     t.text "description"
-    t.geometry "location", limit: {:srid=>0, :type=>"geometry"}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
