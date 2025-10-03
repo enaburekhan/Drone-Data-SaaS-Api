@@ -1,10 +1,11 @@
-class Users::SessionsController < Devise::SessionsController
+module Users
+  class SessionsController < Devise::SessionsController
     respond_to :json
 
     private
 
     # after login
-    def respond_with(resource, opt={})
+    def respond_with(resource, _opt = {})
       render json: { message: "Logged in Successfully", user: resource }, status: :ok
     end
 
@@ -20,4 +21,5 @@ class Users::SessionsController < Devise::SessionsController
     def sign_in(resource_name, resource)
       # do nothing - avoids disabled session error
     end
+  end
 end

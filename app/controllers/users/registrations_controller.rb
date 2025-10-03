@@ -1,17 +1,19 @@
-class Users::RegistrationsController < Devise::RegistrationsController
-  respond_to :json
+module Users
+  class RegistrationsController < Devise::RegistrationsController
+    respond_to :json
 
-  private
+    private
 
-  def respond_with(resource, _opts = {})
-    if resource.persisted?
-      render json: { message: 'Signed up successfully.', user: resource }, status: :created
-    else
-      render json: { errors: resource.errors.full_messages }, status: :unprocessable_content
+    def respond_with(resource, _opts = {})
+      if resource.persisted?
+        render json: { message: "Signed up successfully.", user: resource }, status: :created
+      else
+        render json: { errors: resource.errors.full_messages }, status: :unprocessable_content
+      end
     end
-  end
 
-  def sign_up(resource_name, resource)
-    # prevent devise from writing to session.
+    def sign_up(resource_name, resource)
+      # prevent devise from writing to session.
+    end
   end
 end
