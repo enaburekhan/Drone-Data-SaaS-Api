@@ -17,7 +17,7 @@ class Project < ApplicationRecord
   before_save :set_location_from_lat_lon
 
   # geospatial scope (find nearby projects in km)
-  scope :nearby, ->(lon, lat, radius_km = 5) {
+  scope :nearby, lambda { |lon, lat, radius_km = 5|
     where(%{
       ST_DWithin(
         location::geography,
@@ -53,8 +53,8 @@ class Project < ApplicationRecord
   private
 
   def set_location_from_lat_lon
-     return if latitude.blank? || longitude.blank?
+    return if latitude.blank? || longitude.blank?
 
-     self.location = "POINT(#{longitude} #{latitude})"
+    self.location = "POINT(#{longitude} #{latitude})"
   end
 end

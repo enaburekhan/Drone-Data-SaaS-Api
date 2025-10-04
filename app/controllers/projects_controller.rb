@@ -29,7 +29,7 @@ class ProjectsController < ApplicationController
   # put/patch /projects/:id
   def update
     if @project.update(project_params)
-        render json: @project.to_geojson_feature, status: :ok   
+      render json: @project.to_geojson_feature, status: :ok
     else
       render json: { errors: @project.errors.full_messages }, status: :unprocessable_content
     end
@@ -52,5 +52,4 @@ class ProjectsController < ApplicationController
   def project_params
     params.expect(project: %i[name description latitude longitude])
   end
-
 end

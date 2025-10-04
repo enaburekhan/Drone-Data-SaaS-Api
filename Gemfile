@@ -12,6 +12,8 @@ gem "pg", "~> 1.1"
 
 gem "activerecord-postgis-adapter"
 
+gem "active_model_serializers", "~> 0.10.14"
+
 gem "rgeo"
 
 gem "devise"
