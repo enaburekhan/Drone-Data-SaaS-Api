@@ -1,5 +1,6 @@
 class Project < ApplicationRecord
   belongs_to :user
+  has_many :uploads, dependent: :destroy
 
   # validate presence
   validates :name, presence: true
