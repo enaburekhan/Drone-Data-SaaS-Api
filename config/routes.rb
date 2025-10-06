@@ -7,8 +7,6 @@ Sidekiq::Web.use Rack::Session::Cookie,
   max_age: 86_400 # 1 day in seconds
 
 Rails.application.routes.draw do
-  # mount sidekiq dashboard only in development
-  mount Sidekiq::Web => "/sidekiq" if Rails.env.development?
 
   devise_for :users,
              # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -21,6 +19,12 @@ Rails.application.routes.draw do
                registrations: "users/registrations"
              }
   resources :projects do
-    resources :uploads, only: %i[index show create]
+    resources :uploads do
+      resources :processed_results, only: %i[index show create]
+    end
   end
+
+  # mount sidekiq dashboard only in development
+  mount Sidekiq::Web => "/sidekiq" if Rails.env.development?
+
 end
