@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_04_105936) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_06_141713) do
   create_schema "topology"
 
   # These are extensions that must be enabled in order to support this database
@@ -44,6 +44,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_105936) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "processed_results", force: :cascade do |t|
+    t.bigint "upload_id", null: false
+    t.string "result_type", default: "NDVI", null: false
+    t.string "data_url", null: false
+    t.jsonb "metadata", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["result_type"], name: "index_processed_results_on_result_type"
+    t.index ["upload_id"], name: "index_processed_results_on_upload_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -83,6 +94,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_105936) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "processed_results", "uploads"
   add_foreign_key "projects", "users"
   add_foreign_key "uploads", "projects"
 end

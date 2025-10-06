@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  upload: one
+  result_type: MyString
+  data_url: MyString
+  metadata: 
+
+two:
+  upload: two
+  result_type: MyString
+  data_url: MyString
+  metadata: 
