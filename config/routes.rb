@@ -19,7 +19,7 @@ Rails.application.routes.draw do
                registrations: "users/registrations"
              }
   resources :projects do
-    resources :uploads do
+    resources :uploads, only: %i[index show create] do
       resources :processed_results, only: %i[index show create]
     end
   end
