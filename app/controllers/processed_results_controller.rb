@@ -3,7 +3,6 @@ class ProcessedResultsController < ApplicationController
   before_action :set_upload
   before_action :set_project
 
-  
   # get /projects/:project_id/uploads/:upload_id/processes_results
   def index
     @processed_results = @upload.processed_results.order(created_at: :desc)
@@ -23,7 +22,8 @@ class ProcessedResultsController < ApplicationController
       # Example: enqueue background job if you process data asynchronously
       # ProcessedResultJob.perform_async(@processed_result.id)
 
-      render json: { message: "Processed result created successfully", processed_result: @processed_result }, status: :created 
+      render json: { message: "Processed result created successfully", processed_result: @processed_result },
+             status: :created
     else
       render json: { errors: @processed_result.errors.full_messages }, status: :unprocessable_entity
     end
@@ -45,6 +45,6 @@ class ProcessedResultsController < ApplicationController
 
   def processed_result_params
     # don't include :upload_id since it comes from nested route
-    params.require(:processed_result).permit(:result_type, :data_url, metadata: {})
+    params.expect(processed_result: [:result_type, :data_url, { metadata: {} }])
   end
 end

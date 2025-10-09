@@ -20,9 +20,6 @@ gem "sidekiq", "~> 7.3"
 
 gem "rack-session", "~> 1.0"
 
-
-
-
 gem "devise"
 gem "devise-jwt"
 gem "rack-cors"
