@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_06_141713) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_09_120745) do
   create_schema "topology"
 
   # These are extensions that must be enabled in order to support this database
@@ -69,6 +69,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_06_141713) do
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.string "title", null: false
+    t.text "summary"
+    t.jsonb "insights", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_reports_on_project_id"
+  end
+
   create_table "uploads", force: :cascade do |t|
     t.bigint "project_id", null: false
     t.string "status", default: "pending"
@@ -96,5 +106,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_06_141713) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "processed_results", "uploads"
   add_foreign_key "projects", "users"
+  add_foreign_key "reports", "projects"
   add_foreign_key "uploads", "projects"
 end
