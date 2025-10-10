@@ -12,3 +12,12 @@ class Payment < ApplicationRecord
     refunded: "refunded"
   }
 end
+
+# helper: store arbitrary data (like stripe session_id)
+def mark_success!(transaction_id:, metadata: {})
+  update(status: :succeeded, transaction_id, metadata)
+end
+
+def mark_failed!(metadata: {})
+  update(status: :failed, metadata)
+end
