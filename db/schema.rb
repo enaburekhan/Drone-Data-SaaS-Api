@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_09_120745) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_10_144802) do
   create_schema "topology"
 
   # These are extensions that must be enabled in order to support this database
@@ -44,6 +44,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_09_120745) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.string "status", default: "pending", null: false
+    t.string "provider", null: false
+    t.string "transaction_id", null: false
+    t.jsonb "metadata", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_payments_on_project_id"
+    t.index ["transaction_id"], name: "index_payments_on_transaction_id", unique: true
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "processed_results", force: :cascade do |t|
@@ -104,6 +119,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_09_120745) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "payments", "projects"
+  add_foreign_key "payments", "users"
   add_foreign_key "processed_results", "uploads"
   add_foreign_key "projects", "users"
   add_foreign_key "reports", "projects"

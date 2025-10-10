@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   belongs_to :user
   has_many :uploads, dependent: :destroy
   has_many :reports, dependent: :destroy
+  has_many :payments, dependent: :destroy
 
   # validate presence
   validates :name, presence: true
