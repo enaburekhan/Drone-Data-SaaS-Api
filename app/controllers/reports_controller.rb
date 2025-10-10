@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project
-  before_action :set_upload, only: [:index, :create, :generate]
+  before_action :set_upload, only: %i[index create generate]
 
   # /projects/:project_id/reports
   def index
@@ -14,9 +14,9 @@ class ReportsController < ApplicationController
     report = @project.reports.build(report_params)
 
     if report.save
-      render json: { message: "report created successfully", report: report }, status: :created 
+      render json: { message: "report created successfully", report: report }, status: :created
     else
-        render json: { errors: report.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: report.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -28,7 +28,7 @@ class ReportsController < ApplicationController
     render json: @report, status: :created
   rescue ActiveRecord::RecordNotFound => e
     render json: { error: e.message }, status: :not_found
-  rescue => e
+  rescue StandardError => e
     render json: { error: e.message, backtrace: e.backtrace }, status: :internal_server_error
   end
 
@@ -43,6 +43,6 @@ class ReportsController < ApplicationController
   end
 
   def report_params
-    params.require(:report).permit(:title, :summary, insights: {})
+    params.expect(report: [:title, :summary, { insights: {} }])
   end
 end

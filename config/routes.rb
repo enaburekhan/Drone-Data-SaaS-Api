@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :payments, only: %i[index create]
+
   # mount sidekiq dashboard only in development
   mount Sidekiq::Web => "/sidekiq" if Rails.env.development?
 end
