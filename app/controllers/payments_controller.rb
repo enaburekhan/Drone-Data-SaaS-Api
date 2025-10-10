@@ -9,6 +9,7 @@ class PaymentsController < ApplicationController
 
   # create a mock payment (later replaced by stripe checkout)
   def create
+    # Rails.logger.info "Received params: #{params.inspect}"
     @payment = current_user.payments.build(payment_params)
 
     if @payment.save
