@@ -1,11 +1,12 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:index, :create]
+  before_action :set_project
+  before_action :set_upload, only: [:index, :create, :generate]
 
   # /projects/:project_id/reports
   def index
-    reports = @project.reports.order(created_at: :desc)
-    render json: reports
+    @reports = @project.reports.order(created_at: :desc)
+    render json: @reports
   end
 
   # Post /projects/:project_id/reports
@@ -22,8 +23,13 @@ class ReportsController < ApplicationController
   # auto-generate report from processed resilts
   # post /projects/:project_id/reports/generate
   def generate
-    report = Report.generate_for_project(@project)
-    render json: report, status: :created
+    # ensure project not nil
+    @report = Report.generate_for_project(@project)
+    render json: @report, status: :created
+  rescue ActiveRecord::RecordNotFound => e
+    render json: { error: e.message }, status: :not_found
+  rescue => e
+    render json: { error: e.message, backtrace: e.backtrace }, status: :internal_server_error
   end
 
   private
@@ -32,7 +38,11 @@ class ReportsController < ApplicationController
     @project = Project.find(params[:project_id])
   end
 
+  def set_upload
+    @upload = @project.uploads.find(params[:upload_id])
+  end
+
   def report_params
-    params.require(:report).permit(:title, :summary, :insights: {})
+    params.require(:report).permit(:title, :summary, insights: {})
   end
 end

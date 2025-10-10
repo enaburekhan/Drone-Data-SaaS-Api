@@ -5,7 +5,8 @@ class Report < ApplicationRecord
 
   # helper for generating summaries from processed results
   def self.generate_for_project(project)
-    processed = project.uploads.includes(:processed_results).flat_map(&:processed_result)
+    # fetch all processed results through the Project's uploads
+    processed = project.uploads.includes(:processed_results).flat_map(&:processed_results)
     avg_ndvi = begin
       processed.map { |r| r.metadata["average_ndvi"].to_f }.compact.sum / processed.size
     rescue StandardError
