@@ -12,7 +12,7 @@ module Users
     # after logout
     def respond_to_on_destroy
       if current_user
-        render json: { message: "Logged out successsfully." }, status: :no_content
+        render json: { message: "Logged out successsfully." }, status: :ok
       else
         render json: { error: "User not found." }, status: :unauthorized
       end

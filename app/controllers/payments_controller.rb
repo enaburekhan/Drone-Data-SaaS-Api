@@ -22,6 +22,6 @@ class PaymentsController < ApplicationController
   private
 
   def payment_params
-    params.require(:payment).permit(:project_id, :amount, :provider)
+    params.expect(payment: %i[project_id amount provider])
   end
 end

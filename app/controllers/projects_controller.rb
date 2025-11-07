@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
     if project.save
       render json: project.to_geojson_feature, status: :created
     else
-      render json: { errors: project.errors.full_messages }, status: :unprocessable_content
+      render json: { errors: project.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -31,7 +31,7 @@ class ProjectsController < ApplicationController
     if @project.update(project_params)
       render json: @project.to_geojson_feature, status: :ok
     else
-      render json: { errors: @project.errors.full_messages }, status: :unprocessable_content
+      render json: { errors: @project.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

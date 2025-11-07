@@ -27,7 +27,7 @@ class UploadsController < ApplicationController
 
       render json: upload, status: :created
     else
-      render json: { errors: upload.errors.full_messages }, status: :unprocessable_content
+      render json: { errors: upload.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
