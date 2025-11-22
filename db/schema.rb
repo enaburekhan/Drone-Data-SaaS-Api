@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_04_153650) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_10_144802) do
   create_schema "topology"
 
   # These are extensions that must be enabled in order to support this database
@@ -44,14 +44,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_04_153650) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-  end
-
-  create_table "denylists", force: :cascade do |t|
-    t.string "jti", null: false
-    t.datetime "exp", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["jti"], name: "index_denylists_on_jti"
   end
 
   create_table "payments", force: :cascade do |t|

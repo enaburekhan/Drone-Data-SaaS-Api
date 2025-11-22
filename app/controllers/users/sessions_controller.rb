@@ -4,22 +4,23 @@ module Users
 
     private
 
-    # after login
-    def respond_with(resource, _opt = {})
-      render json: { message: "Logged in Successfully", user: resource }, status: :ok
+    # Extract jWT token from warden after login
+    def respond_with(resource, _opts = {})
+      token = request.env["warden-jwt_auth.token"]
+
+      render json: {
+        message: "Logged in Successfully",
+        token: token,
+        user: {
+          id: resource.id,
+          email: resource.email
+        }
+      }, status: :ok
     end
 
     # after logout
     def respond_to_on_destroy
-      if current_user
-        render json: { message: "Logged out successsfully." }, status: :ok
-      else
-        render json: { error: "User not found." }, status: :unauthorized
-      end
-    end
-
-    def sign_in(resource_name, resource)
-      # do nothing - avoids disabled session error
+      render json: { message: "Logged out successsfully." }, status: :ok
     end
   end
 end

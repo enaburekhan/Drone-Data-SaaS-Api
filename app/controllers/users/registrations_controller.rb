@@ -6,14 +6,19 @@ module Users
 
     def respond_with(resource, _opts = {})
       if resource.persisted?
-        render json: { message: "Signed up successfully.", user: resource }, status: :created
+        token = request.env["warden-jwt_auth.token"]
+
+        render json: {
+          message: "Signed up successfully.",
+          token: token,
+          user: {
+            id: resource.id,
+            email: resource.email
+          }
+        }, status: :ok
       else
         render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity
       end
-    end
-
-    def sign_up(resource_name, resource)
-      # prevent devise from writing to session.
     end
   end
 end
